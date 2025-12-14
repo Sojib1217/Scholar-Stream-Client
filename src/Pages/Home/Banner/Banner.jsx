@@ -38,6 +38,7 @@ const Banner = () => {
                 initial={{ x: 200, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
+                data-aos="flip-up"
             >
                 <img
                     src={bannerImg}

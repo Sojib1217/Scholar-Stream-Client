@@ -1,0 +1,93 @@
+[
+  {
+    "id": "t1",
+    "name": "Aisha Rahman",
+    "photo": "https://example.com/images/aisha.jpg",
+    "rating": 5,
+    "review": "ScholarStream helped me secure a fully funded scholarship in Canada. Amazing experience!",
+    "university": "University of Toronto",
+    "degree": "Bachelor"
+  },
+  {
+    "id": "t2",
+    "name": "Kevin Patel",
+    "photo": "https://example.com/images/kevin.jpg",
+    "rating": 4,
+    "review": "Clear, easy, and reliable. I applied for a Master's scholarship without stress.",
+    "university": "Monash University",
+    "degree": "Masters"
+  },
+  {
+    "id": "t3",
+    "name": "Sara Ali",
+    "photo": "https://example.com/images/sara.jpg",
+    "rating": 5,
+    "review": "Very helpful platform with accurate information. Highly recommended!",
+    "university": "Harvard University",
+    "degree": "Bachelor"
+  },
+  {
+    "id": "t4",
+    "name": "John Smith",
+    "photo": "https://example.com/images/john.jpg",
+    "rating": 4,
+    "review": "I found multiple opportunities and applied easily. Great interface.",
+    "university": "University of Sydney",
+    "degree": "Masters"
+  },
+  {
+    "id": "t5",
+    "name": "Maria Gomez",
+    "photo": "https://example.com/images/maria.jpg",
+    "rating": 5,
+    "review": "Smooth process with helpful guidance. Loved the experience!",
+    "university": "Stanford University",
+    "degree": "Diploma"
+  },
+  {
+    "id": "t6",
+    "name": "Omar Hussain",
+    "photo": "https://example.com/images/omar.jpg",
+    "rating": 5,
+    "review": "Got shortlisted for a partial scholarship through ScholarStream. Very thankful!",
+    "university": "University of Melbourne",
+    "degree": "Masters"
+  },
+  {
+    "id": "t7",
+    "name": "Emily Carter",
+    "photo": "https://example.com/images/emily.jpg",
+    "rating": 4,
+    "review": "Good platform with verified scholarship listings. Helped me save time.",
+    "university": "UCLA",
+    "degree": "Bachelor"
+  },
+  {
+    "id": "t8",
+    "name": "Hassan Mahmud",
+    "photo": "https://example.com/images/hassan.jpg",
+    "rating": 5,
+    "review": "Great UI and fast support team. I got my application done in 2 days.",
+    "university": "National University of Singapore",
+    "degree": "Masters"
+  },
+  {
+    "id": "t9",
+    "name": "Chloe Williams",
+    "photo": "https://example.com/images/chloe.jpg",
+    "rating": 4,
+    "review": "Helpful for comparing universities and scholarship types. Recommended!",
+    "university": "University of Oxford",
+    "degree": "Bachelor"
+  },
+  {
+    "id": "t10",
+    "name": "Rajiv Saha",
+    "photo": "https://example.com/images/rajiv.jpg",
+    "rating": 5,
+    "review": "Thanks to ScholarStream, I applied to my dream university with confidence.",
+    "university": "ETH Zurich",
+    "degree": "Masters"
+  }
+]
+
