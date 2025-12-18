@@ -21,7 +21,7 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <div className='px-6 md:px-14 shadow-md'>
+            <div className='px-6 md:px-14 shadow-md bg-base-100'>
                 <div className="navbar">
                     <div className="navbar-start">
                         <div className="dropdown">
@@ -58,7 +58,7 @@ const Navbar = () => {
                                 <div tabIndex={0} role="button" className="w-14"><img className='w-16 h-16 rounded-full' role='button' src={`${user ? user.photoURL : <FaUserCircle size={40}></FaUserCircle>}`} alt="" /> </div>
 
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 md:w-52 p-2 shadow-sm">
-                                   <Link><button className='btn bg-purple-500 text-white w-full'>Dashboard <MdDashboardCustomize /></button></Link>
+                                   <Link to={'/dashboard'}><button  className='btn bg-purple-500 text-white w-full'>Dashboard <MdDashboardCustomize /></button></Link>
                                     <button onClick={handleLogout} className='btn bg-black text-white mt-2'>Logout <MdLogout /></button>
                                 </ul>
                             </div> : <div className='flex gap-3'>

@@ -5,14 +5,17 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import GoogleLogin from '../SocialLogin/GoogleLogin';
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
+import useAxios from '../../../hooks/useAxios';
 
 const Register = () => {
     const {registerUser,updateUserProfile}=useAuth()
     const {register,handleSubmit,formState:{errors}}=useForm()
     const location = useLocation()
     const navigate = useNavigate()
+    const axios=useAxios()
+
     const handleRegister=(data)=>{
-    // console.log("after register",data)
+    
     const profileImg=data.image[0]
     
     registerUser(data.email,data.password)
@@ -27,6 +30,18 @@ const Register = () => {
         .then(res=>{
             console.log('after image upload',res.data.data.url)
              const photoURL = res.data.data.url;
+                   const userInfo={
+                            email:data.email,
+                            displayName:data.name,
+                            photoURL: res.data.data.url
+                         }
+                         axios.post('/users',userInfo)
+                         .then(res=>{
+                            if(res.data.insertedId){
+                                console.log('user data save to database')
+                            }
+                         })
+
               const userProfile = {
                             displayName: data.name,
                             photoURL: photoURL

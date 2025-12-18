@@ -1,10 +1,11 @@
 import React from 'react';
 import bannerImg from '../../../assets/banner.jpg';
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 
 const Banner = () => {
     return (
-        <div className='flex flex-col md:flex-row justify-between items-center p-4 gap-6 mt-10'>
+        <div className='flex flex-col md:mx-10 md:flex-row justify-between items-center p-4 gap-6 mt-10'>
             {/* banner-content */}
             {/* <div className='flex-1 space-y-3'>
                 <motion.h1
