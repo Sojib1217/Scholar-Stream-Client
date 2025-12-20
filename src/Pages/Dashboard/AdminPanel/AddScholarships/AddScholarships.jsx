@@ -2,23 +2,33 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../../hooks/useAuth';
 import useAxios from '../../../../hooks/useAxios';
+import Swal from 'sweetalert2';
 
 const AddScholarship = () => {
 
-     const {user}=useAuth() 
-     const axios=useAxios()
-     console.log(user)
-    const { register, handleSubmit,  } = useForm();
+    const { user } = useAuth()
+    const axios = useAxios()
+    console.log(user)
+    const { register, handleSubmit, } = useForm();
 
     const handleAddScholarship = (data) => {
         console.log("Scholarship Data:", data);
-        axios.post('/scholarships',data)
-        .then(res=>{
-            console.log(res)
-            
-        })
-        .catch(err=>console.log(err))
-        
+        axios.post('/scholarships', data)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Your Scholarship has been created successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+
+            })
+            .catch(err => console.log(err))
+
     };
 
     const inputStyle = "w-full px-4 py-2 border rounded-lg focus:ring-blue-500 transition duration-200 bg-gray-50 border-gray-300";
