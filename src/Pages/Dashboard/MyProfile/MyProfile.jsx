@@ -4,11 +4,11 @@ import useRole from '../../../hooks/useRole';
 
 const MyProfile = () => {
     const { user } = useAuth()
-    const {data}=useRole()
-    console.log(user,'role',data)
+    const {role}=useRole()
+    
     return (
         <div className='px-10 py-6'>
-            <h1 className='text-4xl font-bold text-center text-blue-600'>My Profile</h1>
+            <h1 className='text-4xl font-bold text-center text-blue-600 mb-6'>My Profile</h1>
              <div className="min-h-[60vh] flex items-center justify-center bg-linear-to-br from-purple-200 via-white to-sky-200 p-4">
       
       {/* Card */}
@@ -43,7 +43,7 @@ const MyProfile = () => {
         <div className="flex justify-center">
           <span className="px-5 py-1 text-sm font-semibold rounded-full 
             bg-linear-to-r from-purple-600 to-indigo-600 text-white shadow-md">
-            🎓Role {data} 
+            🎓Role {role} 
           </span>
         </div>
 

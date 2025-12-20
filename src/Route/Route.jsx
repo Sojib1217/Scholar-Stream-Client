@@ -14,6 +14,10 @@ import PaymentHistory from "../Pages/payment/paymentHistory";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import MyApplications from "../Pages/Dashboard/MyApplications/MyApplications";
 import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
+import AddScholarships from "../Pages/Dashboard/AdminPanel/AddScholarships/AddScholarships";
+import ManageScholarships from "../Pages/Dashboard/AdminPanel/ManageScholarships/ManageScholarships";
+import ManageUsers from "../Pages/Dashboard/AdminPanel/ManageUsers/ManageUsers";
+import Analytics from "../Pages/Dashboard/AdminPanel/Analytics/Analytics";
 
 
 
@@ -75,6 +79,7 @@ export const router = createBrowserRouter([
         path: 'payment-cancelled',
         Component: paymentCancelled
       },
+      // student only routes
       {
         path:'my-applications',
         Component:MyApplications
@@ -82,6 +87,24 @@ export const router = createBrowserRouter([
       {
         path:'my-reviews',
         Component:MyReviews
+      },
+      // Admin Only Routes;
+      {
+        path:'add-scholarships',
+         element:<AddScholarships></AddScholarships>
+
+      },
+      {
+        path:'manage-scholarships',
+        element:<ManageScholarships></ManageScholarships>,
+      },
+      {
+        path:'manage-users',
+        element:<ManageUsers></ManageUsers>
+      },
+      {
+        path:'analytics',
+        element:<Analytics></Analytics>
       }
 
 
