@@ -55,7 +55,7 @@ const Navbar = () => {
 
                         {
                             user ? <div className="dropdown dropdown-center">
-                                <div tabIndex={0} role="button" className="w-14"><img className='w-16 h-16 rounded-full' role='button' src={`${user ? user.photoURL : <FaUserCircle size={40}></FaUserCircle>}`} alt="" /> </div>
+                                <div tabIndex={0} role="button" className="w-14"><img className='w-16 h-16 rounded-full ' role='button' src={`${user ? user.photoURL : <FaUserCircle size={40}></FaUserCircle>}`} alt="" /> </div>
 
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 md:w-52 p-2 shadow-sm">
                                    <Link to={'/dashboard'}><button  className='btn bg-purple-500 text-white w-full'>Dashboard <MdDashboardCustomize /></button></Link>

@@ -8,9 +8,7 @@ const MyApplications = () => {
     const { user } = useAuth()
     const axios = useAxios()
 
-
     const [selectedApp, setSelectedApp] = useState(null);
-
 
     const { data: applications = [], } = useQuery({
         queryKey: ['myApplications', user?.email],
