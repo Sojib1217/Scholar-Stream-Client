@@ -52,7 +52,7 @@ const ScholarshipDetails = () => {
       userName: user.displayName,
       userEmail: user.email,
       universityName: scholar.universityName,
-      scholarshipCategory: scholar.scholarshipCategory,
+      degree: scholar.degree,
       universityCity: scholar.universityCity,
       universityCountry: scholar.universityCountry,
       applicationFees: scholar.applicationFees,

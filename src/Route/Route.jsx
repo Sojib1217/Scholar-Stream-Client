@@ -18,6 +18,8 @@ import AddScholarships from "../Pages/Dashboard/AdminPanel/AddScholarships/AddSc
 import ManageScholarships from "../Pages/Dashboard/AdminPanel/ManageScholarships/ManageScholarships";
 import ManageUsers from "../Pages/Dashboard/AdminPanel/ManageUsers/ManageUsers";
 import Analytics from "../Pages/Dashboard/AdminPanel/Analytics/Analytics";
+import ManageApplication from "../Pages/Dashboard/ModeratorPanel/ManageApplication/ManageApplication";
+import AllReviews from "../Pages/Dashboard/ModeratorPanel/AllReview/AllReviews";
 
 
 
@@ -105,7 +107,16 @@ export const router = createBrowserRouter([
       {
         path:'analytics',
         element:<Analytics></Analytics>
-      }
+    },
+    // moderator only routes
+    {
+       path:'manage-applied-application',
+       Component:ManageApplication
+    },
+    {
+      path:'all-reviews',
+      Component:AllReviews
+    }
 
 
     ]

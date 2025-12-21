@@ -9,7 +9,7 @@ const AddScholarship = () => {
     const { user } = useAuth()
     const axios = useAxios()
     console.log(user)
-    const { register, handleSubmit, } = useForm();
+    const { register, handleSubmit,reset } = useForm();
 
     const handleAddScholarship = (data) => {
         console.log("Scholarship Data:", data);
@@ -24,6 +24,7 @@ const AddScholarship = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    reset()
                 }
 
             })

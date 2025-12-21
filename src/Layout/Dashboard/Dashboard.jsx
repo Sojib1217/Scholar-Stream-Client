@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Outlet } from 'react-router';
 
 import { FaHistory, FaUsers, FaWpforms } from 'react-icons/fa';
+import { GoCodeReview } from "react-icons/go";
 import { SiGooglescholar } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
 import { MdAnalytics } from "react-icons/md";
@@ -14,7 +15,7 @@ import useRole from '../../hooks/useRole';
 
 const Dashboard = () => {
  const {role}=useRole()
- console.log(role)
+ 
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -96,13 +97,13 @@ const Dashboard = () => {
               <li>
               <Link to={'/dashboard/manage-applied-application'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Applied Applications">
                 {/* parcel icon */}
-                <FaWpforms />
+                <FaWpforms className='text-2xl'/>
                 <span className="is-drawer-close:hidden">Manage Applied Applications</span></Link>
             </li>
             <li>
               <Link to={'/dashboard/all-reviews'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Reviews">
                 {/* parcel icon */}
-                <FaHistory />
+                <GoCodeReview className='text-2xl' />
                 <span className="is-drawer-close:hidden">All Reviews</span></Link>
             </li>
               </>
@@ -116,14 +117,14 @@ const Dashboard = () => {
             <li>
               <Link to={'/dashboard/my-applications'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Applications">
                 {/* parcel icon */}
-                <FaWpforms />
+                <FaWpforms className='text-2xl' />
                 <span className="is-drawer-close:hidden">My Applications</span></Link>
             </li>
             {/* my reviews */}
             <li>
               <Link to={'/dashboard/my-reviews'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Reviews">
                 {/* parcel icon */}
-                <FaHistory />
+                <FaHistory className='text-2xl'/>
                 <span className="is-drawer-close:hidden">My Reviews</span></Link>
             </li>
               </>

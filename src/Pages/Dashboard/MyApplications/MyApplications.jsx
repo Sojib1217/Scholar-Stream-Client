@@ -4,11 +4,15 @@ import useAxios from '../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 
+
 const MyApplications = () => {
     const { user } = useAuth()
+  console.log(user)
     const axios = useAxios()
 
     const [selectedApp, setSelectedApp] = useState(null);
+    const [details,setDetails]=useState(null)
+    console.log(details)
 
     const { data: applications = [], } = useQuery({
         queryKey: ['myApplications', user?.email],
@@ -23,8 +27,8 @@ const MyApplications = () => {
         e.preventDefault();
 
         const reviewData = {
-            applicationId: selectedApp._id,
             scholarshipId: selectedApp.scholarshipId,
+            scholarshipName:selectedApp.scholarshipName,
             universityName: selectedApp.universityName,
             userName: user.displayName,
             userEmail: user.email,
@@ -33,6 +37,7 @@ const MyApplications = () => {
             comment: e.target.comment.value,
             createdAt: new Date(),
         };
+        console.log(reviewData)
 
         await axios.post("/reviews", reviewData)
             .then(res => {
@@ -64,7 +69,7 @@ const MyApplications = () => {
                             <th>Address</th>
                             <th>Feedback</th>
                             <th>Subject</th>
-                            <th>Fee</th>
+                            <th>payment</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -77,7 +82,7 @@ const MyApplications = () => {
                                 <td>{app.universityCity}, {app.universityCountry}</td>
                                 <td>{app.feedback || '—'}</td>
                                 <td>{app.degree}</td>
-                                <td>${app.applicationFees}</td>
+                                <td>{app.paymentStatus}</td>
                                 <td>
                                     <span className="badge badge-outline">
                                         {app.applicationStatus}
@@ -85,8 +90,10 @@ const MyApplications = () => {
                                 </td>
 
                                 <td className="space-x-2">
-                                    {/* Details – always visible */}
-                                    <button className="btn btn-xs btn-info">
+                                  
+                                    <button
+                                     onClick={()=>setDetails(app)}
+                                    className="btn btn-xs btn-info">
                                         Details
                                     </button>
 
@@ -97,7 +104,6 @@ const MyApplications = () => {
                                         </button>
                                     )}
 
-                                    {/* Pay – pending + unpaid */}
                                     {app.applicationStatus === 'pending' &&
                                         app.paymentStatus === 'unpaid' && (
                                             <button className="btn btn-xs btn-success">
@@ -105,14 +111,12 @@ const MyApplications = () => {
                                             </button>
                                         )}
 
-                                    {/* Delete – only pending */}
                                     {app.applicationStatus === 'pending' && (
                                         <button className="btn btn-xs btn-error">
                                             Delete
                                         </button>
                                     )}
-
-                                    {/* Review – only completed */}
+                                   
                                     {app.applicationStatus === 'completed' && (
                                         <button
                                             onClick={() => setSelectedApp(app)}
@@ -176,6 +180,36 @@ const MyApplications = () => {
                     </div>
                 </div>
             )}
+            {/* details-modal info */}
+            {details && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-xl w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">Applications Collection</h3>
+            <ul className="list-disc list-inside space-y-1">
+              <li><b>ScholarshipId:</b>{details?.scholarshipId}</li>
+              <li><b>userName:</b> {details.userName}</li>
+              <li><b>userEmail:</b> {details.userEmail}</li>
+              <li><b>universityName:</b> {details.universityName}</li>
+              <li><b>degree:</b> {details.degree}</li>
+              <li><b>applicationFees:</b> {details.applicationFees}</li>
+              <li><b>serviceCharge:</b>{details.serviceCharge}</li>
+              <li><b>applicationStatus:</b> {details.applicationStatus}</li>
+              <li><b>paymentStatus:</b> {details.paymentStatus}</li>
+              <li><b>applicationDate:</b> {details.applicationDate}</li>
+              <li><b>feedback:</b> {details.feedback}</li>
+            </ul>
+
+            <div className="text-right mt-4">
+              <button
+                onClick={() => setDetails(null)}
+                className="btn btn-sm btn-ghost"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
         </div>
     );
 };

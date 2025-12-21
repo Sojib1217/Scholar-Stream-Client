@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxios from '../../../../hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -9,53 +9,92 @@ const ManageScholarships = () => {
 
     const axios = useAxios()
     const [selectedApp, setSelectedApp] = useState(null)
-    const { data: scholarships = [],refetch } = useQuery({
+
+    const { data: scholarships = [], refetch } = useQuery({
         queryKey: ['scholarships'],
         queryFn: async () => {
             const res = await axios.get('/scholarships')
             return res.data
         }
     })
-    const { register, handleSubmit } = useForm()
-    console.log(scholarships, 'data from manage scholarships')
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {}
+    })
 
+
+    useEffect(() => {
+        if (selectedApp) {
+            reset({
+                scholarshipName: selectedApp.scholarshipName,
+                universityName: selectedApp.universityName,
+                universityCountry: selectedApp.universityCountry,
+                universityCity: selectedApp.universityCity,
+                universityWorldRank: selectedApp.universityWorldRank,
+                subjectCategory: selectedApp.subjectCategory,
+                scholarshipCategory: selectedApp.scholarshipCategory,
+                degree: selectedApp.degree,
+                tuitionFees: selectedApp.tuitionFees,
+                applicationFees: selectedApp.applicationFees,
+                serviceCharge: selectedApp.serviceCharge,
+                universityImage: selectedApp.universityImage,
+                applicationDeadline: selectedApp.applicationDeadline,
+                postedUserEmail: selectedApp.postedUserEmail,
+                scholarshipPostDate: selectedApp.scholarshipPostDate,
+            })
+        }
+    }, [selectedApp, reset])
     const inputStyle = "w-full px-4 py-2 border rounded-lg focus:ring-blue-500 transition duration-200 bg-gray-50 border-gray-300";
     const labelStyle = "block text-sm font-semibold text-gray-700 mb-1";
+
+
+
     const handleUpdateInfo = (data) => {
+        console.log('data', data)
         axios.patch(`/scholarships/${selectedApp._id}`, data)
             .then(res => {
-                console.log(res.data)
-                  setSelectedApp(null)
                 if (res.data.modifiedCount) {
                     Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: "Information has been updated",
-                        showConfirmButton: false,
-                        timer: 1500
+                        title: "updated!",
+                        text: "Your file has been updated.",
+                        icon: "success"
                     });
-                      refetch()
+                    setSelectedApp(null)
+                    refetch()
                 }
             })
     }
 
-     const handleDelete=(id)=>{
-     console.log('hello',id)
-        axios.delete(`/scholarships/${id}`)
-        .then(res=>{
-            console.log(res.data)
-            if(res.data.deletedCount){
-                 Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: "Scholarship has been delete",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    refetch()
+
+
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`/scholarships/${id}`)
+                    .then(res => {
+                        console.log(res.data)
+                        if (res.data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            refetch()
+                        }
+                    })
+
             }
-        })
-     }
+        });
+
+    }
 
 
     return (
@@ -85,14 +124,15 @@ const ManageScholarships = () => {
                                     {/* Details*/}
                                     <button
                                         onClick={() => setSelectedApp(scholarship)}
+
                                         className="btn btn-info">
                                         Details
                                     </button>
 
                                     {/* Delete */}
                                     <button
-                                     onClick={()=>handleDelete(scholarship._id)}
-                                    className="btn btn-error">
+                                        onClick={() => handleDelete(scholarship._id)}
+                                        className="btn btn-error">
                                         Delete
                                     </button>
                                 </td>
@@ -109,17 +149,17 @@ const ManageScholarships = () => {
                         <h2 className="text-xl font-bold mb-4">
                             Details of - {selectedApp.universityName}
                         </h2>
-                        <form onSubmit={handleSubmit(handleUpdateInfo)} className="space-y-6">
+                        <form key={selectedApp?._id} onSubmit={handleSubmit(handleUpdateInfo)} className="space-y-6">
 
                             {/* --- scholarship and university name Section --- */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className={labelStyle}>Scholarship Name</label>
-                                    <input {...register("scholarshipName", { required: true })} defaultValue={selectedApp.scholarshipName} placeholder="Global Excellence Scholarship" className={inputStyle} />
+                                    <input {...register("scholarshipName", { required: true })} placeholder="Global Excellence Scholarship" className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>University Name</label>
-                                    <input {...register("universityName", { required: true })} defaultValue={selectedApp.universityName} placeholder="Harvard University" className={inputStyle} />
+                                    <input {...register("universityName", { required: true })} placeholder="Harvard University" className={inputStyle} />
                                 </div>
                             </div>
 
@@ -127,15 +167,15 @@ const ManageScholarships = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label className={labelStyle}>Country</label>
-                                    <input {...register("universityCountry", { required: true })} defaultValue={selectedApp.universityCountry} className={inputStyle} />
+                                    <input {...register("universityCountry", { required: true })} className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>City</label>
-                                    <input {...register("universityCity", { required: true })} defaultValue={selectedApp.universityCity} className={inputStyle} />
+                                    <input {...register("universityCity", { required: true })} className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>World Rank</label>
-                                    <input type="number" {...register("universityWorldRank")} placeholder="example-- 15" defaultValue={selectedApp.universityWorldRank} className={inputStyle} />
+                                    <input type="number" {...register("universityWorldRank")} placeholder="example-- 15" className={inputStyle} />
                                 </div>
                             </div>
 
@@ -143,7 +183,7 @@ const ManageScholarships = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <label className={labelStyle}>Subject Category</label>
-                                    <select {...register("subjectCategory")} defaultValue={selectedApp.subjectCategory} className={inputStyle}>
+                                    <select {...register("subjectCategory")} className={inputStyle}>
                                         <option value="Engineering">Engineering</option>
                                         <option value="Medicine">Medicine</option>
                                         <option value="ArtsArts & Humanities">Arts & Humanities</option>
@@ -154,7 +194,7 @@ const ManageScholarships = () => {
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Scholarship Category</label>
-                                    <select {...register("scholarshipCategory")} defaultValue={selectedApp.scholarshipCategory} className={inputStyle}>
+                                    <select {...register("scholarshipCategory")} className={inputStyle}>
                                         <option value="Full Fund">Full Fund</option>
                                         <option value="Partial">Partial Fund</option>
                                         <option value="Self-Fund">Self Fund</option>
@@ -162,7 +202,7 @@ const ManageScholarships = () => {
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Degree</label>
-                                    <select {...register("degree")} defaultValue={selectedApp.degree} className={inputStyle}>
+                                    <select {...register("degree")} className={inputStyle}>
                                         <option value="Graduation">Graduation</option>
                                         <option value="Masters">Masters</option>
                                         <option value="Phd">PhD</option>
@@ -174,15 +214,15 @@ const ManageScholarships = () => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4 bg-blue-50 rounded-xl">
                                 <div>
                                     <label className={labelStyle}>Tuition Fees (Optional)</label>
-                                    <input type="number" {...register("tuitionFees")} placeholder="$" defaultValue={selectedApp.tuitionFees} className={inputStyle} />
+                                    <input type="number" {...register("tuitionFees")} placeholder="$" className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Application Fees</label>
-                                    <input type="number" defaultValue={selectedApp.applicationFees} {...register("applicationFees", { required: true })} placeholder="$" className={inputStyle} />
+                                    <input type="number" {...register("applicationFees", { required: true })} placeholder="$" className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Service Charge</label>
-                                    <input type="number" defaultValue={selectedApp.serviceCharge} {...register("serviceCharge", { required: true })} placeholder="$" className={inputStyle} />
+                                    <input type="number" {...register("serviceCharge", { required: true })} placeholder="$" className={inputStyle} />
                                 </div>
                             </div>
 
@@ -190,11 +230,11 @@ const ManageScholarships = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className={labelStyle}>University Image URL</label>
-                                    <input {...register("universityImage", { required: true })} defaultValue={selectedApp.universityImage} placeholder="https://..." className={inputStyle} />
+                                    <input {...register("universityImage", { required: true })} placeholder="https://..." className={inputStyle} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Application Deadline</label>
-                                    <input type="date" defaultValue={selectedApp.applicationDeadline} {...register("applicationDeadline", { required: true })} className={inputStyle} />
+                                    <input type="date"  {...register("applicationDeadline", { required: true })} className={inputStyle} />
                                 </div>
                             </div>
 
@@ -202,18 +242,21 @@ const ManageScholarships = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
                                 <div>
                                     <label className={labelStyle}>Post By</label>
-                                    <input defaultValue={selectedApp.postedUserEmail} {...register("postedUserEmail")} className={`${inputStyle} bg-gray-100 `} />
+                                    <input  {...register("postedUserEmail")} className={`${inputStyle} bg-gray-100 `} />
                                 </div>
                                 <div>
                                     <label className={labelStyle}>Post Date</label>
-                                    <input readOnly {...register("scholarshipPostDate")} defaultValue={new Date().toISOString().split('T')[0]} className={`${inputStyle} bg-gray-100 cursor-not-allowed`} />
+                                    <input readOnly {...register("scholarshipPostDate")} className={`${inputStyle} bg-gray-100 cursor-not-allowed`} />
                                 </div>
                             </div>
 
                             <div className="flex justify-end gap-2">
                                 <button
                                     type="button"
-                                    onClick={() => setSelectedApp(null)}
+                                    onClick={() => {
+                                        reset()
+                                        setSelectedApp(null)
+                                    }}
                                     className="btn btn-ghost"
                                 >
                                     Cancel
