@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxios from "../../../../hooks/useAxios";
+
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 
 const ManageApplication = () => {
-    const axios = useAxios();
+    const axiosSecure = useAxiosSecure();
     const [selectedApp, setSelectedApp] = useState(null);
     const [feedbackApp, setFeedbackApp] = useState(null);
     const textRef=useRef()
@@ -15,14 +16,14 @@ const ManageApplication = () => {
     const { data: applications = [], refetch } = useQuery({
         queryKey: ["applications"],
         queryFn: async () => {
-            const res = await axios.get("/applications");
+            const res = await axiosSecure.get("/applications");
             return res.data;
         },
     });
 
     // update status
     const handleStatusUpdate = (id, status) => {
-        axios.patch(`/applications/${id}/status`, { status }).then((res) => {
+        axiosSecure.patch(`/applications/${id}/status`, { status }).then((res) => {
             if (res.data.modifiedCount) {
                 Swal.fire("Updated!", "Application status updated.", "success");
                 refetch();
@@ -48,7 +49,7 @@ const ManageApplication = () => {
     const handleFeedbackSubmit = () => {
         const feedback=textRef.current.value
         console.log('text',feedback)
-        axios.patch(`/applications/${feedbackApp._id}/feedback`, {
+        axiosSecure.patch(`/applications/${feedbackApp._id}/feedback`, {
             feedback
         })
             .then((res) => {

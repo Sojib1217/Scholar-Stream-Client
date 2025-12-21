@@ -4,15 +4,16 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import GoogleLogin from '../SocialLogin/GoogleLogin';
 import useAuth from '../../../hooks/useAuth';
-import axios from 'axios';
-import useAxios from '../../../hooks/useAxios';
+
+
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
     const {registerUser,updateUserProfile}=useAuth()
     const {register,handleSubmit,formState:{errors}}=useForm()
     const location = useLocation()
     const navigate = useNavigate()
-    const axios=useAxios()
+    const axiosSecure=useAxiosSecure()
 
     const handleRegister=(data)=>{
     
@@ -26,7 +27,7 @@ const Register = () => {
         formData.append('image',profileImg)
         // send the image to store and get the url
         const image_Api_Url=`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_api}`
-        axios.post(image_Api_Url,formData)
+        axiosSecure.post(image_Api_Url,formData)
         .then(res=>{
             console.log('after image upload',res.data.data.url)
              const photoURL = res.data.data.url;
@@ -35,7 +36,7 @@ const Register = () => {
                             displayName:data.name,
                             photoURL: res.data.data.url
                          }
-                         axios.post('/users',userInfo)
+                         axiosSecure.post('/users',userInfo)
                          .then(res=>{
                             if(res.data.insertedId){
                                 console.log('user data save to database')

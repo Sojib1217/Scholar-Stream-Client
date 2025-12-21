@@ -1,7 +1,7 @@
 import React from 'react';
 import useAuth from '../../../hooks/useAuth';
-import useAxios from '../../../hooks/useAxios';
 import { useLocation, useNavigate } from 'react-router';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 // import { useLocation, useNavigate } from 'react-router';
 // import useAxiosSecure from '../../hooks/useAxiosSecure';
@@ -11,7 +11,7 @@ const GoogleLogin = () => {
     const { signInWithGoogle } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
-   const axios=useAxios()
+   const axiosSecure=useAxiosSecure()
     const handleGoogleLogin = () => {
         signInWithGoogle()
             .then(result => {
@@ -23,7 +23,7 @@ const GoogleLogin = () => {
                     displayName: result.user.displayName,
                     photoURL: result.user.photoURL
                 }
-                axios.post('/users', userInfo)
+                axiosSecure.post('/users', userInfo)
                     .then(res => {
                         console.log('user created at database from social login system', res.data)
                         navigate(location.state || '/')

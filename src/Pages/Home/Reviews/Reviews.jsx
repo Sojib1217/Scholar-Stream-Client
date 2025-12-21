@@ -63,7 +63,7 @@ const Reviews = ({reviewsPromise}) => {
         <div className='mt-10'>
             <div className='flex flex-col justify-center items-center'>
              
-                <h1 className='text-3xl font-bold mt-4 text-purple-500'>Student Reviews</h1>
+                <h1 className='text-3xl font-bold mt-4 text-purple-500 mb-6'>Student Reviews</h1>
                 
             </div>
             <Swiper

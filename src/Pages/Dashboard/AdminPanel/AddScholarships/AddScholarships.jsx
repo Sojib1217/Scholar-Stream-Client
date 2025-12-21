@@ -1,19 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../../hooks/useAuth';
-import useAxios from '../../../../hooks/useAxios';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const AddScholarship = () => {
 
     const { user } = useAuth()
-    const axios = useAxios()
+    const axiosSecure=useAxiosSecure()
     console.log(user)
     const { register, handleSubmit,reset } = useForm();
 
     const handleAddScholarship = (data) => {
         console.log("Scholarship Data:", data);
-        axios.post('/scholarships', data)
+        axiosSecure.post('/scholarships', data)
             .then(res => {
                 console.log(res.data)
                 if (res.data.insertedId) {

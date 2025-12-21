@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import useAxios from '../../../../hooks/useAxios';
+
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 
 const ManageScholarships = () => {
 
-    const axios = useAxios()
+    const axiosSecure=useAxiosSecure()
     const [selectedApp, setSelectedApp] = useState(null)
 
     const { data: scholarships = [], refetch } = useQuery({
         queryKey: ['scholarships'],
         queryFn: async () => {
-            const res = await axios.get('/scholarships')
+            const res = await axiosSecure.get('/scholarships')
             return res.data
         }
     })
@@ -50,7 +51,7 @@ const ManageScholarships = () => {
 
     const handleUpdateInfo = (data) => {
         console.log('data', data)
-        axios.patch(`/scholarships/${selectedApp._id}`, data)
+        axiosSecure.patch(`/scholarships/${selectedApp._id}`, data)
             .then(res => {
                 if (res.data.modifiedCount) {
                     Swal.fire({
@@ -78,7 +79,7 @@ const ManageScholarships = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`/scholarships/${id}`)
+                axiosSecure.delete(`/scholarships/${id}`)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.deletedCount) {

@@ -3,10 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 
 import useAuth from '../../../hooks/useAuth';
-import useAxios from '../../../hooks/useAxios';
+
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MyReviews = () => {
-    const axios = useAxios();
+    const axiosSecure = useAxiosSecure();
     const {user}=useAuth()
     const [editReview, setEditReview] = useState(null);
     const [editedText, setEditedText] = useState('');
@@ -16,7 +17,7 @@ const MyReviews = () => {
     const { data: reviews = [], refetch } = useQuery({
         queryKey: ['myReviews',user?.email],
         queryFn: async () => {
-            const res = await axios.get(`/reviews/${user.email}`); 
+            const res = await axiosSecure.get(`/reviews?email=${user.email}`); 
             return res.data;
         }
     });
@@ -31,7 +32,7 @@ const MyReviews = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`/reviews/${id}`)
+                axiosSecure.delete(`/reviews/${id}`)
                     .then(res => {
                         if(res.data.deletedCount){
                             Swal.fire('Deleted!', 'Your review has been deleted.', 'success');
@@ -44,7 +45,7 @@ const MyReviews = () => {
 
     // Submit edited review
     const handleEditSubmit = () => {
-        axios.patch(`/reviews/${editReview._id}`, { text: editedText, rating: editedRating })
+        axiosSecure.patch(`/reviews/${editReview._id}`, { text: editedText, rating: editedRating })
             .then(res => {
                 if(res.data.modifiedCount){
                     Swal.fire('Updated!', 'Your review has been updated.', 'success');
@@ -57,8 +58,8 @@ const MyReviews = () => {
     return (
         <div className="p-6">
             <h2 className="text-3xl font-bold mb-4 text-center">My Reviews</h2>
-
-            <div className="overflow-x-auto">
+            {
+                reviews.length > 0 ? <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     <thead>
                         <tr>
@@ -77,8 +78,8 @@ const MyReviews = () => {
                                 <td>{index + 1}</td>
                                 <td>{review.scholarshipName}</td>
                                 <td>{review.universityName}</td>
-                                <td>{review.text}</td>
-                                <td>{new Date(review.date).toLocaleDateString()}</td>
+                                <td>{review.comment}</td>
+                                <td>{new Date(review.createdAt).toLocaleDateString()}</td>
                                 <td>{review.rating}</td>
                                 <td className="space-x-1">
                                     <button
@@ -102,7 +103,9 @@ const MyReviews = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div>: <span>no reviews exist</span>
+            }
+            
 
             {/* Edit Modal */}
             {editReview && (

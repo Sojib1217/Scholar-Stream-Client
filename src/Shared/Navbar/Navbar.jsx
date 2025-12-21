@@ -21,7 +21,7 @@ const Navbar = () => {
     </>
     return (
         <div>
-            <div className='px-6 md:px-14 shadow-md bg-base-100'>
+            <div className='px-6 md:px-14 shadow-md bg-base-100 sticky top-0 z-50'>
                 <div className="navbar">
                     <div className="navbar-start">
                         <div className="dropdown">
@@ -55,15 +55,15 @@ const Navbar = () => {
 
                         {
                             user ? <div className="dropdown dropdown-center">
-                                <div tabIndex={0} role="button" className="w-14"><img className='w-16 h-16 rounded-full ' role='button' src={`${user ? user.photoURL : <FaUserCircle size={40}></FaUserCircle>}`} alt="" /> </div>
+                                <div tabIndex={0} role="button" className="w-14"><img className='w-16 h-14 rounded-full ' role='button' src={`${user ? user.photoURL : <FaUserCircle size={40}></FaUserCircle>}`} alt="" /> </div>
 
                                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 md:w-52 p-2 shadow-sm">
                                    <Link to={'/dashboard'}><button  className='btn bg-purple-500 text-white w-full'>Dashboard <MdDashboardCustomize /></button></Link>
                                     <button onClick={handleLogout} className='btn bg-black text-white mt-2'>Logout <MdLogout /></button>
                                 </ul>
                             </div> : <div className='flex gap-3'>
-                                <Link to={'/login'}><button className='px-2 py-0 md:px-6 md:py-1 border-2 border-black rounded-xl text-xl font-semibold hover:bg-black hover:text-white'>Login</button></Link>
-                                <Link to={'/register'}><button className='hidden md:block md:px-6 py-1 border-2 border-black text-white bg-black rounded-xl text-xl font-semibold hover:bg-white hover:text-black'>Sign Up</button></Link>
+                                <Link to={'/login'}><button className='px-2 py-0 md:px-6 md:py-1 border-2 border-black rounded-xl text-xl font-semibold hover:bg-purple-500 hover:text-white border-none'>Login</button></Link>
+                                <Link to={'/register'}><button className='hidden md:block md:px-6 py-1 border-2 border-black text-white border-none bg-black rounded-xl text-xl font-semibold hover:bg-sky-300 hover:text-black'>Sign Up</button></Link>
                             </div>
                         }
 

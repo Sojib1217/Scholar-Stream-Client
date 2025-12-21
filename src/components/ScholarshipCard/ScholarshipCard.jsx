@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import Button from '../Button';
 import { Link } from 'react-router';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ScholarshipCard = ({ scholar }) => {
 
@@ -14,6 +16,12 @@ const ScholarshipCard = ({ scholar }) => {
       transition: { duration: 0.9 }
     }
   };
+  useEffect(() => {
+  AOS.init({
+    duration: 800,
+    once: false,
+  });
+}, []);
 
   return (
     <motion.div
@@ -22,7 +30,7 @@ const ScholarshipCard = ({ scholar }) => {
       animate="visible"
       className="card bg-base-100 shadow-md"
     >
-      <div className='text-center space-y-2 p-4 shadow-md bg-base-100 rounded-2xl'>
+      <div  data-aos="flip-left" className='text-center space-y-2 p-4 shadow-md bg-base-100 rounded-2xl hover:bg-sky-300'>
         <img
           src={scholar.universityImage}
           className='w-full h-60 rounded-2xl object-cover'

@@ -1,23 +1,34 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router';
+import { Link, Outlet, useNavigate } from 'react-router';
 
 import { FaHistory, FaUsers, FaWpforms } from 'react-icons/fa';
 import { GoCodeReview } from "react-icons/go";
 import { SiGooglescholar } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
-import { MdAnalytics } from "react-icons/md";
+import { MdAnalytics, MdLogout } from "react-icons/md";
 
 import { CgProfile } from "react-icons/cg";
 import useRole from '../../hooks/useRole';
+import useAuth from '../../hooks/useAuth';
 
 
 
 
 const Dashboard = () => {
  const {role}=useRole()
+ const navigate=useNavigate()
+
+ const {  logout } = useAuth()
+    const handleLogout = () => {
+        logout()
+            .then(()=>{ navigate('/')})
+            .catch(error => {
+                console.log(error)
+            })
+    }
  
   return (
-    <div className="drawer lg:drawer-open max-w-7xl mx-auto">
+    <div className="drawer lg:drawer-open max-w-7xl mx-auto ">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
@@ -34,7 +45,7 @@ const Dashboard = () => {
 
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible ">
+      <div className="drawer-side ">
         <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
         <div className="flex min-h-full flex-col items-start bg-sky-200 is-drawer-close:w-14 is-drawer-open:w-64 pr-2">
           {/* Sidebar content here */}
@@ -130,10 +141,12 @@ const Dashboard = () => {
               </>
             }
            
-            
-
-            
-            
+             <li className='w-full mt-100 rounded-3xl'>
+              <Link className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Logout">
+                {/* parcel icon */}
+                 
+                <button onClick={handleLogout} className="btn border-none bg-black text-white is-drawer-close:hidden"><MdLogout className='text-2xl'/> Logout</button></Link>
+            </li>
           </ul>
         </div>
       </div>

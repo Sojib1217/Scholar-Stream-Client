@@ -20,6 +20,10 @@ import ManageUsers from "../Pages/Dashboard/AdminPanel/ManageUsers/ManageUsers";
 import Analytics from "../Pages/Dashboard/AdminPanel/Analytics/Analytics";
 import ManageApplication from "../Pages/Dashboard/ModeratorPanel/ManageApplication/ManageApplication";
 import AllReviews from "../Pages/Dashboard/ModeratorPanel/AllReview/AllReviews";
+import ModeratorRoute from "./ModeratorRoute";
+import AdminRoute from "./AdminRoute";
+import Error from "../components/Error/Error";
+
 
 
 
@@ -29,13 +33,14 @@ export const router = createBrowserRouter([
   {
     path: '/',
     Component: RootLayout,
+    errorElement:<Error></Error>,
     children: [
       {
         index: true, Component: Home
       },
       {
         path: 'all-scholarships',
-        Component: AllScholarships
+        element: <AllScholarships></AllScholarships>
       },
       {
         path: 'login',
@@ -93,29 +98,30 @@ export const router = createBrowserRouter([
       // Admin Only Routes;
       {
         path:'add-scholarships',
-         element:<AddScholarships></AddScholarships>
+         element:<AdminRoute><AddScholarships></AddScholarships></AdminRoute>
 
       },
       {
         path:'manage-scholarships',
-        element:<ManageScholarships></ManageScholarships>,
+        element:<AdminRoute><ManageScholarships></ManageScholarships></AdminRoute>,
       },
       {
         path:'manage-users',
-        element:<ManageUsers></ManageUsers>
+       
+        element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path:'analytics',
-        element:<Analytics></Analytics>
+        element:<AdminRoute><Analytics></Analytics></AdminRoute>
     },
     // moderator only routes
     {
        path:'manage-applied-application',
-       Component:ManageApplication
+       element:<ModeratorRoute><ManageApplication></ManageApplication></ModeratorRoute>
     },
     {
       path:'all-reviews',
-      Component:AllReviews
+      element:<ModeratorRoute><AllReviews></AllReviews></ModeratorRoute>
     }
 
 

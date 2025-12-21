@@ -13,21 +13,21 @@ const Footer = () => {
       
         <Logo></Logo>
        </div>
-          <p className='mt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt voluptatibus quis a laborum fugiat doloribus necessitatibus, officia qui obcaecati ipsam, ex minima, iusto repellat cumque modi facere voluptatum voluptate error placeat! Laborum vitae minima amet et voluptatum assumenda nesciunt, </p>
+          <p className='mt-2'>Empowering students to discover the best scholarships and universities worldwide. We connect ambition with opportunity through trusted guidance and transparent information.</p>
       </nav>
       <nav className='flex flex-col space-y-3'>
         <h6 className="footer-title">Services</h6>
-        <a className="link link-hover">Develop</a>
-        <a className="link link-hover">Design</a>
-        <a className="link link-hover">Marketing</a>
-        <a className="link link-hover">Advertisement</a>
+        <a className="link link-hover">University Exploration</a>
+        <a className="link link-hover">Find Scholarships</a>
+        <a className="link link-hover">Scholarship Listings</a>
+        <a className="link link-hover">Review & Rating System</a>
       </nav>
       <nav className='flex flex-col space-y-3'>
         <h6 className="footer-title">Company</h6>
         <a className="link link-hover">About us</a>
         <a className="link link-hover">Contact</a>
-        <a className="link link-hover">course</a>
-        <a className="link link-hover">Press kit</a>
+        <a className="link link-hover">scholarships</a>
+        <a className="link link-hover">student support</a>
       </nav>
       <nav className='flex flex-col space-y-3'>
         <h6 className="footer-title">Social</h6>
@@ -40,7 +40,7 @@ const Footer = () => {
       </nav>
      </div>
     <div className='max-w-10/12 mx-auto'>
-       <p >© 2025 OmegaLearn. All rights reserved.</p>
+       <p >© 2025 <span className='text-purple-500'>ScholarStream</span>. All rights reserved.</p>
     </div>
     </footer>
   );

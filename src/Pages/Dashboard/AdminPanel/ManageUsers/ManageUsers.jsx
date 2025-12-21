@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxios from "../../../../hooks/useAxios";
+
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 
 const ManageUsers = () => {
-  const axios = useAxios()
+  const axiosSecure=useAxiosSecure()
   const [roleFilter, setRoleFilter] = useState("all");
 
   // fetch users
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axios.get("/users");
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
@@ -25,9 +26,9 @@ const ManageUsers = () => {
 
   // change role
   const handleChangeRole = (id, role) => {
-    axios.patch(`/users/${id}/role`,  {role} ).then((res) => {
+    axiosSecure.patch(`/users/${id}/role`,  {role} ).then((res) => {
       if (res.data.modifiedCount) {
-        Swal.fire("Updated!", "User role updated.", "success");
+        Swal.fire("Role Updated!", "User role updated.", "success");
         refetch();
       }
     });
@@ -43,7 +44,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`/users/${id}`).then((res) => {
+        axiosSecure.delete(`/users/${id}`).then((res) => {
           if (res.data.deletedCount) {
             Swal.fire("Deleted!", "User removed.", "success");
             refetch();
@@ -54,13 +55,13 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold text-center mb-6">
+    <div className="p-6 ">
+      <h2 className="text-3xl font-bold text-center mb-6 ">
         Manage Users
       </h2>
 
       {/* Filter */}
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-end ">
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
@@ -74,10 +75,10 @@ const ManageUsers = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto ">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr >
               <th>#</th>
               <th>Name</th>
               <th>Email</th>

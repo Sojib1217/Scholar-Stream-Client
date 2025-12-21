@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
-import useAxios from '../../../hooks/useAxios';
+
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 
 const MyApplications = () => {
     const { user } = useAuth()
   console.log(user)
-    const axios = useAxios()
+    const axiosSecure = useAxiosSecure()
 
     const [selectedApp, setSelectedApp] = useState(null);
     const [details,setDetails]=useState(null)
@@ -17,7 +18,7 @@ const MyApplications = () => {
     const { data: applications = [], } = useQuery({
         queryKey: ['myApplications', user?.email],
         queryFn: async () => {
-            const res = await axios.get(`/applications?email=${user.email}`)
+            const res = await axiosSecure.get(`/applications?email=${user.email}`)
             return res.data;
         }
     })
@@ -39,7 +40,7 @@ const MyApplications = () => {
         };
         console.log(reviewData)
 
-        await axios.post("/reviews", reviewData)
+        await axiosSecure.post("/reviews", reviewData)
             .then(res => {
                 console.log(res)
                 if (res.data.insertedId) {
@@ -60,8 +61,8 @@ const MyApplications = () => {
     return (
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-4">My Applications</h2>
-
-            <div className="overflow-x-auto">
+            {
+                applications.length > 0 ? <div className="overflow-x-auto">
                 <table className="table">
                     <thead>
                         <tr>
@@ -89,7 +90,7 @@ const MyApplications = () => {
                                     </span>
                                 </td>
 
-                                <td className="space-x-2">
+                                <td className="space-x-2 space-y-2">
                                   
                                     <button
                                      onClick={()=>setDetails(app)}
@@ -129,7 +130,9 @@ const MyApplications = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div>:<span>no review have to show</span>
+            }
+           
 
             {/* review modal */}
             {selectedApp && (

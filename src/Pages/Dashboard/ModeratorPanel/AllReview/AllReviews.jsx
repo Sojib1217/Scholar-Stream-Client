@@ -1,15 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import useAxios from '../../../../hooks/useAxios';
+
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const AllReviews = () => {
-    const axios = useAxios();
+    const axiosSecure = useAxiosSecure();
 
     // Fetch all reviews
     const { data: reviews = [], refetch } = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
-            const res = await axios.get('/reviews');
+            const res = await axiosSecure.get('/reviews');
             return res.data;
         },
     });
@@ -24,7 +25,7 @@ const AllReviews = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`/reviews/${id}`)
+                axiosSecure.delete(`/reviews/${id}`)
                     .then(res => {
                         if (res.data.deletedCount) {
                             Swal.fire('Deleted!', 'The review has been deleted.', 'success');
