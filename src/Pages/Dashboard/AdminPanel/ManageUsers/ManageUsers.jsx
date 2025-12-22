@@ -94,7 +94,7 @@ const ManageUsers = () => {
                 <td>{user.displayName}</td>
                 <td>{user.email}</td>
                 <td className="capitalize">{user.role}</td>
-                <td className="space-x-2">
+                <td className="space-x-2 space-y-3">
 
                   {/* Changing Role */}
                   {user.role === "admin" && (

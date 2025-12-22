@@ -18,6 +18,19 @@ const ScholarshipDetails = () => {
     }
   })
 
+const { id:scholarshipId } = useParams(); 
+
+const { data: reviews = [], } = useQuery({
+  queryKey: ['reviews', id],
+  queryFn: async () => {
+    const res = await axios.get('/reviews', {
+      params: { scholarshipId: scholarshipId } 
+    });
+    return res.data;
+  }
+});
+
+
 
   // const getCoverageText = (scholar) => {
   //   switch (scholar.scholarshipCategory) {
@@ -153,7 +166,48 @@ const ScholarshipDetails = () => {
 
       </div>
       <div>
-        <h1>Review Section will add after</h1>
+        <h2 className="text-2xl font-bold mt-10 mb-4">Student Reviews</h2>
+
+{reviews.length === 0 && (
+  <p className="text-gray-500">No reviews yet.</p>
+)}
+
+<div className="space-y-4">
+  {reviews.map(review => (
+    <div
+      key={review._id}
+      className="border rounded-lg p-4 bg-base-100 shadow-sm"
+    >
+      <div className="flex items-center gap-4 mb-2">
+        {/* Reviewer Image */}
+        <img
+          src={review.reviewerImage}
+          alt={review.reviewerName}
+          className="w-12 h-12 rounded-full object-cover"
+        />
+
+        <div>
+          {/* Reviewer Name */}
+          <p className="font-semibold">{review.reviewerName}</p>
+
+          {/* Date */}
+          <p className="text-sm text-gray-500">
+            {new Date(review.createdAt).toLocaleDateString()}
+          </p>
+        </div>
+      </div>
+
+      {/* Rating */}
+      <p className="text-yellow-500 mb-1">
+        {'⭐'.repeat(review.rating)}
+      </p>
+
+      {/* Comment */}
+      <p className="text-gray-700">{review.comment}</p>
+    </div>
+  ))}
+</div>
+
       </div>
     </div>
   );
