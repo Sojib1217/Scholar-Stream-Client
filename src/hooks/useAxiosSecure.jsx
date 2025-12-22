@@ -4,7 +4,7 @@ import useAuth from './useAuth';
 import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
-  baseURL: 'https://scholar-stream-server-4zt8t40ab.vercel.app'
+  baseURL: 'https://scholar-stream-server-wheat.vercel.app'
 })
 
 const useAxiosSecure = () => {

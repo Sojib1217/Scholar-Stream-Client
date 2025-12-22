@@ -6,4 +6,4 @@ Key Features : Student can apply to university and make payment through stripe a
 
 Npm packages : like -- Tailwind css, DaisyUi, React-Router,React-Hook-Form, Firebase,Axios for api, and Tanstack Query, Framer Motion, Aos, React-icons, swiper , sweet alert etc...
 
-Live Link: 
+Live Link: https://scholar-stream-a890b.web.app/
