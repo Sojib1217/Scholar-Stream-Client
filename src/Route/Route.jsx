@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'scholarships/:id',
-        element: <PrivateRoute><ScholarshipDetails></ScholarshipDetails></PrivateRoute>
+        element: <ScholarshipDetails></ScholarshipDetails>
       },
       
     ]
